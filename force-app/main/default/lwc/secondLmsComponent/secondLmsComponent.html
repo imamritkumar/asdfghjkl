@@ -1,0 +1,12 @@
+<template>
+    <div style="width: 100%;background:White;" class="slds-p-vertical_small slds-p-horizontal_small" if:true={dataDisplay}>
+        <div class="slds-scrollable_y">
+            <lightning-datatable 
+                key-field="Id" 
+                columns={fields} 
+                selected-rows={selectedData}
+                onrowaction={handleRowAction} 
+                data={realDate}></lightning-datatable><br/>
+            </div>
+    </div> 
+</template>

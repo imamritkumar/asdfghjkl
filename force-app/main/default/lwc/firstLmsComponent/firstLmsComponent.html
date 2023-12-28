@@ -1,0 +1,55 @@
+<template>
+    <div class="slds-box slds-theme_shade">
+        <div if:true={spinner} class="slds-backdrop slds-backdrop_open">
+            <lightning-spinner alternative-text="Loading" size="large" variant="brand"></lightning-spinner>
+        </div>
+        <div style="width: 40%;" class="slds-p-vertical_small slds-p-horizontal_small">
+            <lightning-combobox name="progress" label="Select Object" value={value} placeholder="Select Progress" options={objectList} onchange={getFieldshandle}></lightning-combobox>
+        </div>
+        <div style="width:100%;" if:true={fieldsDisplay} class="slds-grid slds-gutters slds-p-vertical_small slds-p-horizontal_small">
+            <div class="slds-col">
+                <lightning-dual-listbox name="languages" label="Select Fields" source-label="Available" selected-label="Selected" field-level-help="Select your preferred languages" options={fieldList} onchange={getSelectFields}></lightning-dual-listbox>
+            </div>
+            
+            <!--div class="slds-col"><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+                <lightning-button label="Process" title="Process" icon-name="utility:forward" class="slds-m-left_x-small" onclick={getDatahandle}></lightning-button>
+            </div-->
+        </div>
+        <div class="slds-p-vertical_small slds-p-horizontal_small" if:true={dataDisplay}>
+            <div class="slds-scrollable_y">
+                <lightning-datatable 
+                    key-field="Id" 
+                    columns={listOfFieldMap} 
+                    data={UIData}
+                    default-sort-direction={defaultSortDirection}
+                    sorted-direction={sortDirection}
+                    sorted-by={sortedBy}
+                    onrowselection={getSelectedName}   
+                    selected-rows={selectedRows}              
+                    onsort={onHandleSort}></lightning-datatable><br/>
+            </div>
+            <div class="slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-3">
+                    <lightning-combobox
+                            name="progress"
+                            value={pageSize}
+                            placeholder={pageSize}
+                            options={options}
+                            onchange={handleChange} class="slds-size_2-of-4"></lightning-combobox>
+                </div>
+                <div class="slds-col slds-size_1-of-3 slds-align_absolute-center">
+                    <lightning-button variant="brand" label="" title="First" icon-name="utility:jump_to_left" class="slds-m-left_x-small" onclick={changeRecords}></lightning-button>
+                    <lightning-button variant="brand" label="" title="Previous" icon-name="utility:chevronleft" class="slds-m-left_x-small" onclick={changeRecords}></lightning-button>
+                    <lightning-button variant="brand" label="" title="Next" icon-name="utility:chevronright" class="slds-m-left_x-small" onclick={changeRecords}></lightning-button>
+                    <lightning-button variant="brand" label="" title="Last" icon-name="utility:jump_to_right" class="slds-m-left_x-small" onclick={changeRecords}></lightning-button>
+                </div>
+                <div class="slds-col slds-size_1-of-3 slds-text-align_right">
+                    {currentPage} of {totalPage}
+                </div>
+            </div>
+            <div class="slds-m-left_x-small slds-theme_shade slds-m-bottom_medium" style="margin-left: 84%;">
+                <lightning-button variant="brand" label="Send" title="Send" icon-name="utility:jump_to_right" onclick={getDatahandle}></lightning-button>
+            </div>
+        </div> 
+    </div>
+</template>

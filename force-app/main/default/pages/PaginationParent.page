@@ -1,0 +1,29 @@
+<apex:page controller="PaginationParentController" sidebar="False">
+    <apex:pageBlock >
+        <apex:form >
+            <apex:outputText >Select Object :</apex:outputText>&nbsp;&nbsp;
+              <apex:selectList value="{!SelectedObject}" size="1" id="allObject">
+                  <apex:actionSupport event="onchange" action="{!getFields}" reRender="allfield,panelGrid,Reset"/>
+                  <apex:selectOptions value="{!allObjectList}"></apex:selectOptions>
+              </apex:selectList>
+            	<apex:commandButton style="width:70px;margin-left:20px;" value="Reset" id="Reset" action="{!resetAll}" disabled="{!if(NOT(contains(SelectedObject,'None')),false,true)}" reRender="allObject,panelGrid,allfield,Add,Remove,selectedfield"/>
+            <div style="padding:20px;"></div>
+            <apex:outputPanel id="panelGrid" >
+                <apex:panelGrid columns="3"  rendered="{!allFieldsList.size > 0 || selectedFieldList.size > 0}">
+                    <apex:selectList size="10" value="{!initialSelectFieldForAdd}" id="allfield" style="width:200px;" multiselect="true">
+                        <apex:selectOptions value="{!allFieldsList}"></apex:selectOptions>
+                    </apex:selectList> 
+                    
+                    <apex:panelGroup >
+                        <apex:commandButton style="width:70px;margin:20px;" value="Add" id="Add" disabled="{!NOT(allFieldsList.size > 0)}" action="{!addFields}" reRender="allObject,allfield,selectedfield,Add,Remove,Process,Reset" status="pageStatus"/><br/>
+                        <apex:commandButton style="width:70px;margin:20px;" value="Remove" id="Remove" disabled="{!NOT(selectedFieldList.size > 0)}" action="{!removeFields}" reRender="allObject,allfield,selectedfield,Add,Remove,Process,Reset" status="pageStatus"/>
+                    </apex:panelGroup>
+    
+                    <apex:selectList size="10" value="{!initialSelectFieldForRemove}" id="selectedfield" style="width:200px;" multiselect="true">
+                        <apex:selectOptions value="{!selectedFieldList}"></apex:selectOptions>
+                    </apex:selectList>
+                </apex:panelGrid>
+			</apex:outputPanel>
+        </apex:form>
+    </apex:pageBlock>
+</apex:page>

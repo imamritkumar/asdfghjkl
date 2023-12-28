@@ -1,0 +1,8 @@
+<apex:page standardController="Case" recordSetVar="Cs" extensions="ListViewController" lightningStylesheets="True">
+    
+   <!--This is how we call the Flow with a input paramater. Here CasesSelectedRecs is the input variable of the Flow-->
+   <flow:interview name="CaseListView">
+        <apex:param name="CaseSelectedRecs" value="{!LstSelectedCases}" />
+    </flow:interview>
+    
+</apex:page>
